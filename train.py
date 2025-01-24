@@ -86,7 +86,7 @@ def main():
     parser.add_argument(
         "--config-file",
         # load the config file
-        default="config/cub.yaml",
+        default=" ",
         metavar="FILE",
         help="path to config file",
         type=str,
@@ -128,5 +128,5 @@ def main():
 
 
 if __name__ == '__main__':
-    os.environ["CUDA_VISIBLE_DEVICES"] = '1'
+    os.environ["CUDA_VISIBLE_DEVICES"] = ''
     main()

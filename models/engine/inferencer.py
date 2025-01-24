@@ -30,7 +30,6 @@ def cal_accuracy(model, dataloadr, att, test_id, device,att_all, bias=None):
     sum1 = 0
     sum_wrong_all = 0
     sum_wrong_c =0
-    '''jisuan unseen-seen'''
     unique_pre = np.unique(outpred_0)
     for l in unique_labels:
         idx = np.nonzero(labels == l)[0]

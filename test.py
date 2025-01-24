@@ -48,7 +48,7 @@ def main():
     parser.add_argument(
         "--config-file",
         # load the config file
-        default="config/..yaml",
+        default=" ",
         metavar="FILE",
         help="path to config file",
         type=str,

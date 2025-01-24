@@ -34,7 +34,8 @@ Customize the paths of checkpoint and test set, and run:
 ```shell
  python test.py
 ```
-You can test our trained model: [CUB](https://drive.google.com/drive/folders/1SJndgiyeYHkkP_95QcmNmymc4E_rT20I), [AwA2](https://drive.google.com/drive/folders/1SJndgiyeYHkkP_95QcmNmymc4E_rT20I), [SUN](https://drive.google.com/drive/folders/1SJndgiyeYHkkP_95QcmNmymc4E_rT20I).
+
+You can download and test our [model](https://pan.baidu.com/s/15yzbyMYPnXCWoHknveoT-A) (password: vbme): CUB, AwA2, and SUN.
 
 ## ❗ Cite:
 If this work is helpful for you, please cite our paper.

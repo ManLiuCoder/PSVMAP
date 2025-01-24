@@ -87,8 +87,6 @@ class SimpleReasoning(nn.Module):
 class Tokenmix(nn.Module):
     def __init__(self, np,dim):
         super(Tokenmix, self).__init__()
-        # dim =196
-        # hidden_dim = dim*3 #512
         if dim == 196:
             hidden_dim = 512
         elif dim == 49:
@@ -215,10 +213,9 @@ class Block(nn.Module):
 
 
     def forward(self, x, parts=None):
-        # in: x[b,768,196] parts[b,312,768]
         b,c,h,w = x.shape
         x= x.view(b,c,h*w).permute(0, 2, 1)
-        attn_0,attn_out = self.enc_attn(q=parts, k=x, v=x) # q[b,312,768] kv[b,196,768]
+        attn_0,attn_out = self.enc_attn(q=parts, k=x, v=x) 
         attn_0=self.maxpool1d(attn_0).flatten(1)
         parts1 = parts + attn_out
         parts2 = self.group_compact(parts1)
@@ -235,7 +232,6 @@ class Block(nn.Module):
         feats = x + feats
         feats = self.reason(feats)
         feats = feats + self.ffn1(feats)
-        # feats = rearrange(feats, "b p c -> b c p")
         feat_out= feats.permute(0, 2, 1).view(b,c,h,w)
         
         return feat_out,attn_0,attn_1,parts_in
@@ -333,7 +329,7 @@ class PSVMAPNet(nn.Module):
    
     def calculate_entropy(self, logits):
         probabilities = F.softmax(logits, dim=1)
-        log_probabilities = torch.log(probabilities + 1e-6)  # 避免取对数时出现无穷大
+        log_probabilities = torch.log(probabilities + 1e-6) 
         entropy = -torch.sum(probabilities * log_probabilities, dim=1)
         return entropy
     def calculate_uncertainty(self, logits):
@@ -357,7 +353,7 @@ class PSVMAPNet(nn.Module):
         gs_feat_normalized = gs_feat.div(gs_feat_norm + 1e-5)
         temp_norm = torch.norm(att_all, p=2, dim=1).unsqueeze(1).expand_as(att_all)
         seen_att_normalized = att_all.div(temp_norm + 1e-5)
-        score_o = torch.einsum('bd,nd->bn', gs_feat_normalized, seen_att_normalized)  # [8,150]
+        score_o = torch.einsum('bd,nd->bn', gs_feat_normalized, seen_att_normalized)  
         d, _ = seen_att.shape
         score_o = score_o*self.scale
         if d == self.cls_num:
@@ -460,7 +456,7 @@ def build_PSVMAPNet(cfg):
     scale = cfg.MODEL.SCALE
     vit_model = create_model(num_classes=-1)
     # load pretrain model
-    vit_model_path = "...pth"
+    vit_model_path = " "
     weights_dict = torch.load(vit_model_path)
     del_keys = ['head.weight', 'head.bias'] if vit_model.has_logits \
         else ['head.weight', 'head.bias']
